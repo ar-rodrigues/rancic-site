@@ -1,0 +1,102 @@
+{
+  "HomePage": {
+    "title": "To get started, edit the page.js file.",
+    "intro": "Looking for a starting point or more instructions? Head over to <templates>Templates</templates> or the <learning>Learning</learning> center.",
+    "templates": "Templates",
+    "learning": "Learning",
+    "deployNow": "Deploy Now",
+    "documentation": "Documentation"
+  },
+  "common": {
+    "locale": "English"
+  },
+  "Navbar": {
+    "brandLine1": "Rančić",
+    "brandLine2": "Software",
+    "logoAlt": "RANČIĆ SOFTWARE",
+    "home": "HOME",
+    "about": "ABOUT",
+    "keyFeatures": "KEY FEATURES",
+    "contact": "CONTACT"
+  },
+  "Hero": {
+    "subtitle": "Currently used in Croatian industry.",
+    "title": "Armatura: The Future of Steel Processing and Production Control",
+    "description": "Synchronizes your entire production line, from the first design to the final shipment.",
+    "getInTouch": "Get in touch",
+    "knowMore": "Know more"
+  },
+  "About": {
+    "title": "About us",
+    "paragraph1": "Program Armatura synchronizes high-precision steel plate processing from cloud-stored designs to real-time machine performance.",
+    "paragraph2": "We bridge the gap between engineering and the factory floor, ensuring every cut is precise, every plan is optimized and every report is dynamic.",
+    "scheduleMeeting": "Schedule Meeting",
+    "videoAlt": "About Rancic Software"
+  },
+  "Features": {
+    "sectionTitle": "Key Features & Functionality",
+    "features": [
+      {
+        "title": "Cloud Architecture",
+        "description": "Securely store, access, and modify your data in the cloud via fast binary based web services.",
+        "iconAlt": "Cloud Architecture"
+      },
+      {
+        "title": "Effortless Organization & Cloning",
+        "description": "Simplify your workflow with drag and drop reordering cards and plans. Quickly duplicate orders, objects, or entire projects to save hours of manual setup.",
+        "iconAlt": "Effortless Organization & Cloning"
+      },
+      {
+        "title": "Barcode Integration",
+        "description": "Generate drawing cards with Schnell or BVBS barcodes. Factory workers will simply scan to load precise measures, eliminating manual typing.",
+        "iconAlt": "Barcode Integration"
+      },
+      {
+        "title": "Advanced & Precise Drawing Engine",
+        "description": "Easily create complex geometries with real-measure lines and arcs. Features smart auto-zoom, mouse-driven adjustments, and high-performance graphics for handling massive drawing libraries.",
+        "iconAlt": "Advanced & Precise Drawing Engine"
+      },
+      {
+        "title": "Smart Template Library",
+        "description": "Save and instantly access custom drawing templates. Our intuitive split-screen interface keeps your library on the left and active cards on the right for ideal workflows.",
+        "iconAlt": "Smart Template Library"
+      },
+      {
+        "title": "Real Time Production Data",
+        "description": "Facilitates direct communication with factory hardware, supporting both legacy machines via RS232 ports and modern equipment through Ethernet networks. All production data is automatically captured and stored in local databases before being transmitted to the cloud via a secure, binary-based web service ensuring continuous data logging during internet outages, preventing any information loss.",
+        "iconAlt": "Real Time Production Data"
+      },
+      {
+        "title": "Real Time Planning",
+        "description": "Production planning is managed through the analysis of historical performance and real-time output data. The system automatically generates interactive planning cards that allow for the immediate reordering of tasks to accommodate shifting priorities. This functionality allows users to visually organize production workflows based on actual machine capacity and current order demands.",
+        "iconAlt": "Real Time Planning"
+      },
+      {
+        "title": "Advanced Dynamic Reports",
+        "description": "The reporting engine provides clear data analysis by allowing users to group production metrics by machine, worker, construction site, or specific order dates. It calculates the percentage of completed work relative to planned or requested targets, offering a clear view of operational progress. These dynamic reports enable precise monitoring of completion dates and the identification of performance trends across different variables of the manufacturing process.",
+        "iconAlt": "Advanced Dynamic Reports"
+      }
+    ]
+  },
+  "ContactForm": {
+    "title": "Let's get in touch",
+    "subtitle": "Have questions or want to schedule a demo? Fill the form below to contact our team.",
+    "email": "email",
+    "name": "name",
+    "message": "message",
+    "placeholderEmail": "example@email.com",
+    "placeholderName": "full name",
+    "placeholderMessage": "write your message....",
+    "submit": "Get in Touch"
+  },
+  "Footer": {
+    "description": "Synchronizes your entire production line, from the first design to the final shipment.",
+    "located": "Located in Croatia",
+    "home": "HOME",
+    "about": "ABOUT",
+    "keyFeatures": "KEY FEATURES",
+    "contact": "CONTACT",
+    "copyright": "All rights reserved. Rancic Software 2026",
+    "logoAlt": "RANČIĆ SOFTWARE"
+  }
+}

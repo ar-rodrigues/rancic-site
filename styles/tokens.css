@@ -1,0 +1,114 @@
+/**
+ * Design tokens and theme variables.
+ * Single source of truth for colors, spacing, and typography.
+ * Import after Tailwind in globals.css.
+ */
+
+@theme {
+  /* Light theme tokens (Tailwind utilities: bg-background, text-foreground, etc.) */
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-surface: #fafafa;
+  --color-surface-inner: #ffffff;
+  --color-text-primary: #000000;
+  --color-text-secondary: #666666;
+  --color-project-bg: #010c2b;
+  --color-gradient-accent: #3d8bda;
+}
+
+/* Semantic variables (used by custom CSS and components) */
+:root {
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --surface: var(--color-surface);
+  --surface-inner: var(--color-surface-inner);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --project-bg: var(--color-project-bg);
+  --gradient-accent: var(--color-gradient-accent, #0e42a1);
+  --card-gradient: radial-gradient(
+    ellipse at bottom left,
+    var(--gradient-accent) 0%,
+    var(--gradient-accent) 5%,
+    #2a7ac5 10%,
+    #1e6ab0 18%,
+    #135a9b 26%,
+    #0a4a86 34%,
+    #063a71 42%,
+    #032a5c 50%,
+    var(--project-bg) 55%,
+    var(--project-bg) 100%
+  );
+  /* Footer: light blue glow at top-right corner area, half visible inside card */
+  --footer-gradient: radial-gradient(
+    ellipse 40% 90% at 70% 0%,
+    var(--gradient-accent) 0%,
+    #2a7ac5 15%,
+    #1e6ab0 28%,
+    #0a4a86 42%,
+    #032a5c 58%,
+    var(--project-bg) 75%,
+    var(--project-bg) 100%
+  );
+  /* Contact form: two light points (top-left, bottom-right), 3D8BDA → 0E42A1 → 010c2b */
+  --contact-form-gradient: radial-gradient(
+      ellipse 90% 70% at 0% 0%,
+      #3d8bda 0%,
+      #0e42a1 45%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 100% 100%,
+      #3d8bda 0%,
+      #0e42a1 45%,
+      transparent 70%
+    ),
+    #010c2b;
+  /* Features section: light at center, darker at edges */
+  --features-section-gradient: radial-gradient(
+    ellipse at center,
+    #3d8bda 0%,
+    #2a7ac5 25%,
+    #1e6ab0 45%,
+    #0a4a86 65%,
+    #032a5c 85%,
+    var(--project-bg) 100%
+  );
+  --icon-bg-tint: #010f2d;
+  --section-gradient: linear-gradient(
+    to bottom,
+    #0e42a1 0%,
+    #3d8bda 50%,
+    #010c2b 100%
+  );
+  --card-radius: 12px;
+  /* Layout spacing */
+  --section-horizontal-padding: 50px;
+  --section-vertical-padding: 48px;
+  --container-max-width: 1400px;
+  --container-width: calc(100% - (var(--section-horizontal-padding) * 2));
+  /* Dark section / card text and inputs */
+  --text-on-dark: #ffffff;
+  --text-on-dark-muted: rgba(255, 255, 255, 0.85);
+  --input-bg-dark: rgba(255, 255, 255, 0.08);
+  --input-border-dark: rgba(255, 255, 255, 0.3);
+  --button-outline-on-dark: #ffffff;
+  --navbar-bg: #000000;
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+  --button-secondary-border: #ebebeb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --surface: #000000;
+    --surface-inner: #000000;
+    --text-primary: #ededed;
+    --text-secondary: #999999;
+    --button-primary-hover: #cccccc;
+    --button-secondary-hover: #1a1a1a;
+    --button-secondary-border: #1a1a1a;
+  }
+}
