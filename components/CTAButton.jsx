@@ -65,15 +65,23 @@ export default function CTAButton({
       }}
       onMouseEnter={(e) => {
         if (variant === "primary") {
-          e.currentTarget.style.opacity = "0.9";
+          e.currentTarget.style.backgroundColor = "#24A4FF";
+          e.currentTarget.style.color = "#fff";
+          e.currentTarget.style.boxShadow =
+            "0 2px 12px rgba(36, 164, 255, 0.25)";
         } else {
           e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+          e.currentTarget.style.boxShadow = "0 1px 6px rgba(0, 0, 0, 0.1)";
         }
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.opacity = "1";
-        if (variant === "secondary") {
+        if (variant === "primary") {
+          e.currentTarget.style.backgroundColor = primaryStyle.backgroundColor;
+          e.currentTarget.style.color = primaryStyle.color;
+          e.currentTarget.style.boxShadow = primaryStyle.boxShadow;
+        } else {
           e.currentTarget.style.backgroundColor = "transparent";
+          e.currentTarget.style.boxShadow = "none";
         }
       }}
       {...rest}

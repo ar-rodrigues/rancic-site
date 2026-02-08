@@ -39,6 +39,25 @@
     var(--project-bg) 55%,
     var(--project-bg) 100%
   );
+  /* Hero lighthouse: gradual fade, softer edge at top-left/right (extra steps near project-bg) */
+  --hero-beam-gradient: radial-gradient(
+    ellipse 130% 130% at 0% 100%,
+    var(--gradient-accent) 0%,
+    var(--gradient-accent) 5%,
+    #2a7ac5 12%,
+    #2a7ac5 13%,
+    #1e6ab0 16%,
+    #135a9b 28%,
+    #0a4a86 33%,
+    #0a4a86 34%,
+    #0a4a86 35%,
+    #063a71 42%,
+    #032a5c 49%,
+    #021638 54%,
+    #011228 60%,
+    var(--project-bg) 66%,
+    var(--project-bg) 100%
+  );
   /* Footer: light blue glow at top-right corner area, half visible inside card */
   --footer-gradient: radial-gradient(
     ellipse 40% 90% at 70% 0%,

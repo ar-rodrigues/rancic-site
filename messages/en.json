@@ -22,6 +22,8 @@
   "Hero": {
     "subtitle": "Currently used in Croatian industry.",
     "title": "Armatura: The Future of Steel Processing and Production Control",
+    "titleSecondLine1": "The Future of Steel Processing and",
+    "titleSecondLine2": "Production Control",
     "description": "Synchronizes your entire production line, from the first design to the final shipment.",
     "getInTouch": "Get in touch",
     "knowMore": "Know more"

@@ -1,5 +1,6 @@
 import { Poppins, Raleway } from "next/font/google";
 import "./globals.css";
+import PageLoadTransition from "@/components/PageLoadTransition";
 
 const poppins = Poppins({
   weight: ["200", "300", "400"],
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html suppressHydrationWarning>
       <body className={`${poppins.variable} ${raleway.variable}`}>
-        {children}
+        <PageLoadTransition>{children}</PageLoadTransition>
       </body>
     </html>
   );

@@ -34,7 +34,8 @@ export default function About() {
           <Col xs={24} lg={16} style={{ display: "flex" }}>
             <Card
               style={{
-                background: "radial-gradient(ellipse at top right, #3d8bda 0%, #3d8bda 15%, #3d8bda 20%, #010c2b 45%, #010c2b 100%)",
+                background:
+                  "radial-gradient(ellipse at top right, #3d8bda 0%, #3d8bda 15%, #3d8bda 20%, #010c2b 45%, #010c2b 100%)",
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
@@ -76,7 +77,8 @@ export default function About() {
           <Col xs={24} lg={8} style={{ display: "flex" }}>
             <Card
               style={{
-                background: "radial-gradient(ellipse at right center, #1955B2 0%, #1955B2 25%, #010c2b 70%, #010c2b 100%)",
+                background:
+                  "radial-gradient(ellipse at right center, #1955B2 0%, #1955B2 25%, #010c2b 70%, #010c2b 100%)",
                 width: "100%",
                 borderRadius: "var(--card-radius)",
                 border: "none",
@@ -95,54 +97,56 @@ export default function About() {
                 },
               }}
             >
-            <div>
-              <h2
-                style={{
-                  fontFamily: "var(--font-raleway)",
-                  fontWeight: 700,
-                  fontSize: "clamp(32px, 4vw, 48px)",
-                  color: "var(--text-on-dark)",
-                  marginBottom: 24,
-                  marginTop: 0,
-                  lineHeight: 1.2,
-                  textAlign: "center",
-                }}
+              <div>
+                <h2
+                  style={{
+                    fontFamily: "var(--font-raleway)",
+                    fontWeight: 700,
+                    fontSize: "clamp(32px, 4vw, 48px)",
+                    color: "var(--text-on-dark)",
+                    marginBottom: 24,
+                    marginTop: 0,
+                    lineHeight: 1.2,
+                    textAlign: "center",
+                  }}
+                >
+                  {t("title")}
+                </h2>
+                <Paragraph
+                  style={{
+                    color: "var(--text-on-dark-muted)",
+                    fontFamily: "var(--font-poppins)",
+                    fontWeight: 400,
+                    fontSize: 16,
+                    marginBottom: 16,
+                    lineHeight: 1.6,
+                    textAlign: "left",
+                  }}
+                >
+                  {t("paragraph1")}
+                </Paragraph>
+                <Paragraph
+                  style={{
+                    color: "var(--text-on-dark-muted)",
+                    fontFamily: "var(--font-poppins)",
+                    fontWeight: 400,
+                    fontSize: 16,
+                    marginBottom: 8,
+                    lineHeight: 1.6,
+                    textAlign: "left",
+                  }}
+                >
+                  {t("paragraph2")}
+                </Paragraph>
+              </div>
+              <div
+                style={{ textAlign: "center", marginTop: 8, paddingBottom: 0 }}
               >
-                {t("title")}
-              </h2>
-              <Paragraph
-                style={{
-                  color: "var(--text-on-dark-muted)",
-                  fontFamily: "var(--font-poppins)",
-                  fontWeight: 400,
-                  fontSize: 16,
-                  marginBottom: 16,
-                  lineHeight: 1.6,
-                  textAlign: "left",
-                }}
-              >
-                {t("paragraph1")}
-              </Paragraph>
-              <Paragraph
-                style={{
-                  color: "var(--text-on-dark-muted)",
-                  fontFamily: "var(--font-poppins)",
-                  fontWeight: 400,
-                  fontSize: 16,
-                  marginBottom: 8,
-                  lineHeight: 1.6,
-                  textAlign: "left",
-                }}
-              >
-                {t("paragraph2")}
-              </Paragraph>
-            </div>
-            <div style={{ textAlign: "center", marginTop: 8, paddingBottom: 0 }}>
-              <CTAButton href="#contact">{t("scheduleMeeting")}</CTAButton>
-            </div>
-          </Card>
-        </Col>
-      </Row>
+                <CTAButton href="#contact">{t("scheduleMeeting")}</CTAButton>
+              </div>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </div>
   );

@@ -96,7 +96,8 @@ export default function Features() {
           border: "none",
           borderRadius: "var(--card-radius)",
           padding: "48px 24px",
-          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15)",
+          boxShadow:
+            "0 8px 24px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15)",
         }}
       >
         <Title
