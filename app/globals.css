@@ -90,6 +90,11 @@ a {
     0 0 40px rgba(36, 164, 255, 0.4);
 }
 
+/* Footer nav links: same hover as nav, keep muted default */
+.footer-nav-col .nav-link {
+  color: var(--text-on-dark-muted);
+}
+
 /* Hero text: per-word glow on hover (same as nav links) */
 .hero-text-hover {
   transition: color 0.25s ease, text-shadow 0.25s ease;

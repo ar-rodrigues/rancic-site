@@ -1,9 +1,12 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Form, Input, Typography } from "antd";
+import { Form, Input, Typography, message as antMessage } from "antd";
 import { useTranslations } from "next-intl";
 import CTAButton from "./CTAButton";
+import ContactSuccessOverlay from "./ContactSuccessOverlay";
+import { useContactSubmit } from "@/hooks/useContactSubmit";
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -23,8 +26,11 @@ const inputStyle = {
   borderRadius: 8,
 };
 
+const SUCCESS_OVERLAY_DURATION_MS = 5500;
+
 /**
  * Contact form section with gradient background, center watermark and typography (Raleway/Poppins).
+ * Submits to API and shows success overlay on success.
  * @returns {JSX.Element}
  * @example
  * <ContactForm />
@@ -32,9 +38,27 @@ const inputStyle = {
 export default function ContactForm() {
   const t = useTranslations("ContactForm");
   const [form] = Form.useForm();
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const hideTimeoutRef = useRef(null);
+  const { submit, loading, error } = useContactSubmit();
 
-  const onFinish = () => {
-    // Presentational for now; no backend
+  useEffect(() => {
+    if (error) antMessage.error(error);
+  }, [error]);
+
+  useEffect(() => {
+    return () => {
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    };
+  }, []);
+
+  const onFinish = async (values) => {
+    const ok = await submit(values);
+    if (!ok) return;
+    form.resetFields();
+    setOverlayVisible(true);
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    hideTimeoutRef.current = setTimeout(() => setOverlayVisible(false), SUCCESS_OVERLAY_DURATION_MS);
   };
 
   return (
@@ -120,6 +144,22 @@ export default function ContactForm() {
             requiredMark={false}
           >
             <Form.Item
+              name="website"
+              style={{
+                position: "absolute",
+                left: "-9999px",
+                width: 1,
+                height: 1,
+                overflow: "hidden",
+                opacity: 0,
+                margin: 0,
+                padding: 0,
+                pointerEvents: "none",
+              }}
+            >
+              <Input tabIndex={-1} autoComplete="off" aria-hidden />
+            </Form.Item>
+            <Form.Item
               name="email"
               label={<span style={labelStyle}>{t("email")}</span>}
               rules={[{ required: true, type: "email" }]}
@@ -154,13 +194,20 @@ export default function ContactForm() {
               />
             </Form.Item>
             <Form.Item>
-              <CTAButton htmlType="submit" block>
+              <CTAButton htmlType="submit" block loading={loading} disabled={loading}>
                 {t("submit")}
               </CTAButton>
             </Form.Item>
           </Form>
         </div>
       </div>
+      <ContactSuccessOverlay
+        visible={overlayVisible}
+        onClose={() => {
+          if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+          setOverlayVisible(false);
+        }}
+      />
     </div>
   );
 }

@@ -95,8 +95,8 @@ export default function Footer() {
                 <Link
                   key={href}
                   href={`${pathname}${href}`}
+                  className="nav-link"
                   style={{
-                    color: "var(--text-on-dark-muted)",
                     fontFamily: "var(--font-poppins)",
                     fontWeight: 400,
                     textTransform: "uppercase",

@@ -89,7 +89,9 @@
     "placeholderEmail": "example@email.com",
     "placeholderName": "full name",
     "placeholderMessage": "write your message....",
-    "submit": "Get in Touch"
+    "submit": "Get in Touch",
+    "successTitle": "Thank you!",
+    "successMessage": "We've received your message and will follow up shortly."
   },
   "Footer": {
     "description": "Synchronizes your entire production line, from the first design to the final shipment.",
