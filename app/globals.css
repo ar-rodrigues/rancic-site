@@ -85,7 +85,7 @@ a {
     0 0 40px rgba(36, 164, 255, 0.4) !important;
 }
 
-/* Hero CTAs: stack and shrink on small screens so they fit */
+/* Hero CTAs: smaller size and text on small screens so both buttons fit */
 .hero-cta-wrap {
   display: inline-flex;
   flex-wrap: wrap;
@@ -94,17 +94,16 @@ a {
 }
 @media (max-width: 767px) {
   .hero-cta-wrap {
+    gap: 10px;
     width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+    max-width: 100%;
   }
-  .hero-cta-wrap .hero-cta-btn,
   .hero-cta-wrap .ant-btn {
-    padding: 10px 20px !important;
-    font-size: 14px !important;
-    min-height: 42px !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    min-height: 36px !important;
     height: auto !important;
+    white-space: nowrap;
   }
 }
 

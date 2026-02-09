@@ -40,7 +40,6 @@ export default function Hero() {
   const titleSecondLine2 = t("titleSecondLine2");
 
   const [inView, setInView] = useState(false);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -52,14 +51,6 @@ export default function Hero() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const mql = window.matchMedia("(max-width: 767px)");
-    const handler = () => setIsSmallScreen(mql.matches);
-    handler();
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
   }, []);
 
   return (
@@ -179,17 +170,14 @@ export default function Hero() {
               >
                 <WordsWithHover text={t("description")} />
               </Paragraph>
-              <Space size="middle" className="hero-cta-wrap" direction={isSmallScreen ? "vertical" : "horizontal"}>
-                {!isSmallScreen && (
-                  <CTAButton href="#contact" style={{ borderRadius: 12 }}>
-                    {t("getInTouch")}
-                  </CTAButton>
-                )}
+              <Space size="middle" className="hero-cta-wrap">
+                <CTAButton href="#contact" style={{ borderRadius: 12 }}>
+                  {t("getInTouch")}
+                </CTAButton>
                 <CTAButton
                   variant="secondary"
                   href="#about"
                   style={{ borderRadius: 12 }}
-                  className="hero-cta-btn"
                 >
                   {t("knowMore")}
                 </CTAButton>
