@@ -3,10 +3,16 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Form, Input, Typography, message as antMessage } from "antd";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import CTAButton from "./CTAButton";
 import ContactSuccessOverlay from "./ContactSuccessOverlay";
 import { useContactSubmit } from "@/hooks/useContactSubmit";
+import {
+  SMOOTH_EASE,
+  DESCENT_DURATION,
+  sectionEntranceVariants,
+} from "@/lib/sectionAnimation";
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -39,8 +45,21 @@ export default function ContactForm() {
   const t = useTranslations("ContactForm");
   const [form] = Form.useForm();
   const [overlayVisible, setOverlayVisible] = useState(false);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef(null);
   const hideTimeoutRef = useRef(null);
   const { submit, loading, error } = useContactSubmit();
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (error) antMessage.error(error);
@@ -58,11 +77,15 @@ export default function ContactForm() {
     form.resetFields();
     setOverlayVisible(true);
     if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
-    hideTimeoutRef.current = setTimeout(() => setOverlayVisible(false), SUCCESS_OVERLAY_DURATION_MS);
+    hideTimeoutRef.current = setTimeout(
+      () => setOverlayVisible(false),
+      SUCCESS_OVERLAY_DURATION_MS
+    );
   };
 
   return (
     <div
+      ref={sectionRef}
       style={{
         width: "var(--container-width)",
         maxWidth: "var(--container-max-width)",
@@ -72,7 +95,7 @@ export default function ContactForm() {
         justifyContent: "center",
       }}
     >
-      <div
+      <motion.div
         style={{
           position: "relative",
           background: "var(--contact-form-gradient)",
@@ -82,6 +105,13 @@ export default function ContactForm() {
           padding: "48px 24px",
           overflow: "hidden",
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+        }}
+        initial="hidden"
+        animate={inView ? "visible" : "leave"}
+        variants={sectionEntranceVariants}
+        transition={{
+          duration: DESCENT_DURATION,
+          ease: SMOOTH_EASE,
         }}
       >
         <div
@@ -194,13 +224,18 @@ export default function ContactForm() {
               />
             </Form.Item>
             <Form.Item>
-              <CTAButton htmlType="submit" block loading={loading} disabled={loading}>
+              <CTAButton
+                htmlType="submit"
+                block
+                loading={loading}
+                disabled={loading}
+              >
                 {t("submit")}
               </CTAButton>
             </Form.Item>
           </Form>
         </div>
-      </div>
+      </motion.div>
       <ContactSuccessOverlay
         visible={overlayVisible}
         onClose={() => {

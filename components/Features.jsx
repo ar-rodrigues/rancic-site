@@ -1,9 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Card, Typography } from "antd";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import {
+  SMOOTH_EASE,
+  DESCENT_DURATION,
+  sectionEntranceVariants,
+} from "@/lib/sectionAnimation";
 
 const { Title, Paragraph } = Typography;
 
@@ -23,6 +29,8 @@ const CARD_TEXT_COLOR = "#2E2E2E";
 const TILT_MAX_DEG = 8;
 const HOVER_SCALE = 1.05;
 const CARD_TRANSITION = "transform 0.25s ease, box-shadow 0.25s ease";
+/** Stagger delay between feature cards (matches About section second card). */
+const CARD_STAGGER_DELAY = 0.15;
 
 /**
  * Single feature card with hover zoom, mouse-follow tilt, and shadow.
@@ -60,7 +68,9 @@ function FeatureCard({ iconSrc, index }) {
     boxShadow: isHovered
       ? "0 12px 32px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(0, 0, 0, 0.12)"
       : "0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04)",
-    transform: `scale(${isHovered ? HOVER_SCALE : 1}) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+    transform: `scale(${isHovered ? HOVER_SCALE : 1}) rotateX(${
+      tilt.x
+    }deg) rotateY(${tilt.y}deg)`,
     transition: CARD_TRANSITION,
     zIndex: isHovered ? 10 : 1,
   };
@@ -127,12 +137,26 @@ function FeatureCard({ iconSrc, index }) {
  */
 export default function Features() {
   const t = useTranslations("Features");
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const GAP = 24;
   const middleRowCardWidth = `calc((100% - ${GAP}px) / 2)`;
 
   return (
     <div
+      ref={sectionRef}
       style={{
         width: "var(--container-width)",
         maxWidth: "var(--container-max-width)",
@@ -140,82 +164,130 @@ export default function Features() {
         padding: "var(--section-vertical-padding) 0",
       }}
     >
-      <Card
-        style={{
-          background: "var(--features-section-gradient)",
-          border: "none",
-          borderRadius: "var(--card-radius)",
-          padding: "48px 24px",
-          boxShadow:
-            "0 8px 24px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15)",
+      <motion.div
+        initial="hidden"
+        animate={inView ? "visible" : "leave"}
+        variants={sectionEntranceVariants}
+        transition={{
+          duration: DESCENT_DURATION,
+          ease: SMOOTH_EASE,
         }}
       >
-        <Title
-          level={2}
+        <Card
           style={{
-            fontFamily: "var(--font-raleway)",
-            fontWeight: 500,
-            fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-            color: "var(--text-on-dark)",
-            textAlign: "center",
-            marginBottom: 32,
+            background: "var(--features-section-gradient)",
+            border: "none",
+            borderRadius: "var(--card-radius)",
+            padding: "48px 24px",
+            boxShadow:
+              "0 8px 24px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15)",
           }}
         >
-          {t("sectionTitle")}
-        </Title>
-        <div style={{ display: "flex", flexDirection: "column", gap: GAP }}>
-          {/* Row 1: 3 cards */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: GAP,
+              position: "relative",
+              zIndex: 2,
+              marginBottom: 32,
             }}
           >
-            {FEATURE_ICONS.slice(0, 3).map((iconSrc, i) => (
-              <div key={iconSrc} style={{ minHeight: 0, perspective: 1000 }}>
-                <FeatureCard iconSrc={iconSrc} index={i} />
-              </div>
-            ))}
+            <Title
+              level={2}
+              style={{
+                fontFamily: "var(--font-raleway)",
+                fontWeight: 500,
+                fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+                color: "var(--text-on-dark)",
+                textAlign: "center",
+                marginBottom: 0,
+              }}
+            >
+              {t("sectionTitle")}
+            </Title>
           </div>
-          {/* Row 2: 2 cards centered (no empty column) */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: GAP,
-            }}
-          >
-            {FEATURE_ICONS.slice(3, 5).map((iconSrc, i) => (
-              <div
-                key={iconSrc}
-                style={{
-                  width: middleRowCardWidth,
-                  minWidth: 0,
-                  minHeight: 0,
-                  perspective: 1000,
-                }}
-              >
-                <FeatureCard iconSrc={iconSrc} index={i + 3} />
-              </div>
-            ))}
+          <div style={{ display: "flex", flexDirection: "column", gap: GAP }}>
+            {/* Row 1: 3 cards */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: GAP,
+              }}
+            >
+              {FEATURE_ICONS.slice(0, 3).map((iconSrc, i) => (
+                <motion.div
+                  key={iconSrc}
+                  style={{ minHeight: 0, perspective: 1000 }}
+                  initial="hidden"
+                  animate={inView ? "visible" : "leave"}
+                  variants={sectionEntranceVariants}
+                  transition={{
+                    delay: i * CARD_STAGGER_DELAY,
+                    duration: DESCENT_DURATION,
+                    ease: SMOOTH_EASE,
+                  }}
+                >
+                  <FeatureCard iconSrc={iconSrc} index={i} />
+                </motion.div>
+              ))}
+            </div>
+            {/* Row 2: 2 cards centered (no empty column) */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: GAP,
+              }}
+            >
+              {FEATURE_ICONS.slice(3, 5).map((iconSrc, i) => (
+                <motion.div
+                  key={iconSrc}
+                  style={{
+                    width: middleRowCardWidth,
+                    minWidth: 0,
+                    minHeight: 0,
+                    perspective: 1000,
+                  }}
+                  initial="hidden"
+                  animate={inView ? "visible" : "leave"}
+                  variants={sectionEntranceVariants}
+                  transition={{
+                    delay: (i + 3) * CARD_STAGGER_DELAY,
+                    duration: DESCENT_DURATION,
+                    ease: SMOOTH_EASE,
+                  }}
+                >
+                  <FeatureCard iconSrc={iconSrc} index={i + 3} />
+                </motion.div>
+              ))}
+            </div>
+            {/* Row 3: 3 cards */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: GAP,
+              }}
+            >
+              {FEATURE_ICONS.slice(5, 8).map((iconSrc, i) => (
+                <motion.div
+                  key={iconSrc}
+                  style={{ minHeight: 0, perspective: 1000 }}
+                  initial="hidden"
+                  animate={inView ? "visible" : "leave"}
+                  variants={sectionEntranceVariants}
+                  transition={{
+                    delay: (i + 5) * CARD_STAGGER_DELAY,
+                    duration: DESCENT_DURATION,
+                    ease: SMOOTH_EASE,
+                  }}
+                >
+                  <FeatureCard iconSrc={iconSrc} index={i + 5} />
+                </motion.div>
+              ))}
+            </div>
           </div>
-          {/* Row 3: 3 cards */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: GAP,
-            }}
-          >
-            {FEATURE_ICONS.slice(5, 8).map((iconSrc, i) => (
-              <div key={iconSrc} style={{ minHeight: 0, perspective: 1000 }}>
-                <FeatureCard iconSrc={iconSrc} index={i + 5} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </Card>
+        </Card>
+      </motion.div>
     </div>
   );
 }

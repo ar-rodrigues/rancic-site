@@ -58,27 +58,6 @@ a {
   }
 }
 
-/* Hero lighthouse beam: mask uses --beam-size (set by Framer Motion on ancestor) */
-.hero-beam-layer,
-.hero-content-reveal {
-  -webkit-mask-image: radial-gradient(
-    circle at 0% 100%,
-    black var(--beam-size),
-    transparent var(--beam-size)
-  );
-  mask-image: radial-gradient(
-    circle at 0% 100%,
-    black var(--beam-size),
-    transparent var(--beam-size)
-  );
-  -webkit-mask-position: 0% 100%;
-  mask-position: 0% 100%;
-  -webkit-mask-size: 200% 200%;
-  mask-size: 200% 200%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-}
-
 /* Nav menu link hover: accent color, animation, stronger shadow */
 .nav-link {
   color: var(--text-on-dark);

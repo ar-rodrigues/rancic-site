@@ -5,18 +5,13 @@ import { Card, Row, Col, Typography } from "antd";
 import { motion, useMotionValue, animate } from "framer-motion";
 import { useTranslations } from "next-intl";
 import CTAButton from "./CTAButton";
+import {
+  SMOOTH_EASE,
+  DESCENT_DURATION,
+  sectionEntranceVariants,
+} from "@/lib/sectionAnimation";
 
 const { Paragraph } = Typography;
-
-const SMOOTH_EASE = [0.22, 0.61, 0.36, 1];
-const DESCENT_DURATION = 1;
-const DESCENT_OFFSET_Y = 220;
-
-const cardVariants = {
-  hidden: { opacity: 0, y: -DESCENT_OFFSET_Y },
-  visible: { opacity: 1, y: 0 },
-  leave: { opacity: 0, y: -DESCENT_OFFSET_Y },
-};
 
 /**
  * About section with video placeholder and company description.
@@ -66,21 +61,18 @@ export default function About() {
       "--about-video-origin-x",
       "100%"
     );
-    videoGradientRef.current?.style.setProperty(
-      "--about-video-origin-y",
-      "0%"
-    );
+    videoGradientRef.current?.style.setProperty("--about-video-origin-y", "0%");
 
-    const ctrlVX = animate(
-      videoOriginX,
-      [100, 101.5, 99, 101.5, 100],
-      { duration: 6, repeat: Infinity, ease: "easeInOut" }
-    );
-    const ctrlVY = animate(
-      videoOriginY,
-      [0, -1.5, 1, -1.5, 0],
-      { duration: 6, repeat: Infinity, ease: "easeInOut" }
-    );
+    const ctrlVX = animate(videoOriginX, [100, 101.5, 99, 101.5, 100], {
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    });
+    const ctrlVY = animate(videoOriginY, [0, -1.5, 1, -1.5, 0], {
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    });
 
     return () => {
       unsubVX();
@@ -103,25 +95,19 @@ export default function About() {
         `${v}%`
       );
     });
-    textGradientRef.current?.style.setProperty(
-      "--about-text-origin-x",
-      "100%"
-    );
-    textGradientRef.current?.style.setProperty(
-      "--about-text-origin-y",
-      "50%"
-    );
+    textGradientRef.current?.style.setProperty("--about-text-origin-x", "100%");
+    textGradientRef.current?.style.setProperty("--about-text-origin-y", "50%");
 
-    const ctrlTX = animate(
-      textOriginX,
-      [100, 101.5, 99, 101.5, 100],
-      { duration: 6, repeat: Infinity, ease: "easeInOut" }
-    );
-    const ctrlTY = animate(
-      textOriginY,
-      [50, 48.5, 51.5, 48.5, 50],
-      { duration: 6, repeat: Infinity, ease: "easeInOut" }
-    );
+    const ctrlTX = animate(textOriginX, [100, 101.5, 99, 101.5, 100], {
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    });
+    const ctrlTY = animate(textOriginY, [50, 48.5, 51.5, 48.5, 50], {
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    });
 
     return () => {
       unsubTX();
@@ -153,7 +139,7 @@ export default function About() {
               style={{ width: "100%", display: "flex" }}
               initial="hidden"
               animate={inView ? "visible" : "leave"}
-              variants={cardVariants}
+              variants={sectionEntranceVariants}
               transition={{
                 duration: DESCENT_DURATION,
                 ease: SMOOTH_EASE,
@@ -226,7 +212,7 @@ export default function About() {
               style={{ width: "100%", display: "flex" }}
               initial="hidden"
               animate={inView ? "visible" : "leave"}
-              variants={cardVariants}
+              variants={sectionEntranceVariants}
               transition={{
                 delay: 0.15,
                 duration: DESCENT_DURATION,

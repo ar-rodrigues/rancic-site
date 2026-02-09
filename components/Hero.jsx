@@ -1,10 +1,15 @@
 "use client";
 
-import { useEffect, useRef, Fragment } from "react";
+import { useEffect, useRef, useState, Fragment } from "react";
 import { Card, Typography, Space } from "antd";
-import { motion, useMotionValue, animate } from "framer-motion";
+import { motion } from "framer-motion";
 import CTAButton from "./CTAButton";
 import { useTranslations } from "next-intl";
+import {
+  SMOOTH_EASE,
+  DESCENT_DURATION,
+  sectionEntranceVariants,
+} from "@/lib/sectionAnimation";
 
 const { Paragraph } = Typography;
 
@@ -21,7 +26,7 @@ function WordsWithHover({ text }) {
 
 /**
  * Hero section with headline, subtitle, and primary CTAs.
- * Lighthouse beam effect: gradient and content reveal from bottom-left.
+ * Card descends from above with a smooth animation (same as About section).
  * @returns {JSX.Element}
  * @example
  * <Hero />
@@ -34,135 +39,70 @@ export default function Hero() {
   const titleSecondLine1 = t("titleSecondLine1");
   const titleSecondLine2 = t("titleSecondLine2");
 
-  const beamSize = useMotionValue(0);
-  const ambientOriginX = useMotionValue(0);
-  const ambientOriginY = useMotionValue(100);
-  const beamLayerRef = useRef(null);
-  const wrapperRef = useRef(null);
-  const cardRef = useRef(null);
-  const shadowRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    const mainControls = animate(beamSize, 250, {
-      duration: 7.5,
-      delay: 1.5,
-      ease: [0.33, 0.2, 0.2, 1],
-    });
-    const unsub = beamSize.on("change", (v) => {
-      wrapperRef.current?.style.setProperty("--beam-size", `${v}%`);
-      const shadowOpacity = (v / 250) * 0.22;
-      shadowRef.current?.style.setProperty(
-        "box-shadow",
-        `0 24px 48px rgba(0, 0, 0, ${shadowOpacity})`
-      );
-    });
-    wrapperRef.current?.style.setProperty("--beam-size", "0%");
-    shadowRef.current?.style.setProperty("box-shadow", "none");
-
-    // Subscribe to ambient origin changes to update CSS variable
-    const unsubX = ambientOriginX.on("change", (x) => {
-      beamLayerRef.current?.style.setProperty("--beam-origin-x", `${x}%`);
-    });
-    const unsubY = ambientOriginY.on("change", (y) => {
-      beamLayerRef.current?.style.setProperty("--beam-origin-y", `${y}%`);
-    });
-
-    // Set initial values
-    beamLayerRef.current?.style.setProperty("--beam-origin-x", "0%");
-    beamLayerRef.current?.style.setProperty("--beam-origin-y", "100%");
-
-    let ambientControlsX, ambientControlsY;
-    mainControls.then(() => {
-      // Subtle drift: gradient origin moves slightly (like lighthouse settling)
-      ambientControlsX = animate(ambientOriginX, [0, 1.5, -1, 1.5, 0], {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      });
-      ambientControlsY = animate(ambientOriginY, [100, 98.5, 101, 98.5, 100], {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      });
-    });
-
-    return () => {
-      mainControls.stop();
-      unsub();
-      unsubX();
-      unsubY();
-      ambientControlsX?.stop();
-      ambientControlsY?.stop();
-    };
-  }, [beamSize, ambientOriginX, ambientOriginY]);
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      ref={wrapperRef}
+    <div
+      ref={sectionRef}
       style={{
         width: "var(--container-width)",
         maxWidth: "var(--container-max-width)",
-        margin: "-100px auto 24px auto",
+        margin: "0 auto 24px auto",
       }}
     >
-      <div style={{ position: "relative", width: "100%" }}>
-        <div
-          ref={shadowRef}
-          style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: "var(--card-radius)",
-            pointerEvents: "none",
-            clipPath: "inset(100px 0 0 0)",
-            zIndex: 0,
-          }}
-        />
+      <motion.div
+        style={{ position: "relative", width: "100%" }}
+        initial="hidden"
+        animate={inView ? "visible" : "leave"}
+        variants={sectionEntranceVariants}
+        transition={{
+          duration: DESCENT_DURATION,
+          ease: SMOOTH_EASE,
+        }}
+      >
         <Card
-          ref={cardRef}
           style={{
             background: "var(--project-bg)",
             border: "none",
-            boxShadow: "none",
             borderRadius: "var(--card-radius)",
             width: "100%",
             textAlign: "center",
             padding: "120px 24px",
-            paddingTop: "80px",
+            paddingTop: "48px",
             position: "relative",
             zIndex: 1,
             overflow: "hidden",
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
           }}
         >
-          <motion.div
-            ref={beamLayerRef}
-            className="hero-beam-layer"
+          <div
             style={{
               position: "absolute",
               inset: 0,
               background: `radial-gradient(
-              ellipse 130% 130% at var(--beam-origin-x, 0%) var(--beam-origin-y, 100%),
-              var(--gradient-accent) 0%,
-              var(--gradient-accent) 5%,
-              #2a7ac5 12%,
-              #2a7ac5 13%,
-              #1e6ab0 16%,
-              #135a9b 28%,
-              #0a4a86 33%,
-              #0a4a86 34%,
-              #0a4a86 35%,
-              #063a71 42%,
-              #032a5c 49%,
-              #021638 54%,
-              #011228 60%,
-              var(--project-bg) 66%,
-              var(--project-bg) 100%
-            )`,
+                ellipse 130% 130% at 0% 100%,
+                #1955B2 0%,
+                #1955B2 25%,
+                #010c2b 60%,
+                #010c2b 100%
+              )`,
               borderRadius: "var(--card-radius)",
               pointerEvents: "none",
             }}
           />
           <div
-            className="hero-content-reveal"
             style={{
               position: "relative",
               zIndex: 1,
@@ -180,7 +120,7 @@ export default function Hero() {
                   fontFamily: "var(--font-poppins)",
                   fontWeight: 400,
                   fontSize: 16,
-                  marginBottom: 12,
+                  marginBottom: 20,
                   marginTop: 0,
                 }}
               >
@@ -225,7 +165,7 @@ export default function Hero() {
                   fontFamily: "var(--font-poppins)",
                   fontWeight: 400,
                   fontSize: 18,
-                  marginBottom: 40,
+                  marginBottom: 52,
                   maxWidth: "800px",
                   marginLeft: "auto",
                   marginRight: "auto",
@@ -248,7 +188,7 @@ export default function Hero() {
             </div>
           </div>
         </Card>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
