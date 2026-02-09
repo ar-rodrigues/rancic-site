@@ -65,10 +65,19 @@ export default function Navbar() {
   const t = useTranslations("Navbar");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMedium, setIsMedium] = useState(false);
 
   useEffect(() => {
     const mql = window.matchMedia("(max-width: 767px)");
     const handler = () => setIsMobile(mql.matches);
+    handler();
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px) and (max-width: 1024px)");
+    const handler = () => setIsMedium(mql.matches);
     handler();
     mql.addEventListener("change", handler);
     return () => mql.removeEventListener("change", handler);
@@ -124,21 +133,26 @@ export default function Navbar() {
             />
           ) : (
             <Space size="large" style={{ paddingRight: 80 }}>
-              {NAV_LINKS.map(({ href, labelKey }) => (
-                <Link
-                  key={href}
-                  href={`${pathname}${href}`}
-                  className="nav-link"
-                  style={{
-                    fontFamily: "var(--font-poppins)",
-                    fontWeight: 400,
-                    textTransform: "uppercase",
-                    fontSize: 18,
-                  }}
-                >
-                  {t(labelKey)}
-                </Link>
-              ))}
+              {NAV_LINKS.map(({ href, labelKey }) => {
+                const isKeyFeatures = labelKey === "keyFeatures";
+                const label = isKeyFeatures && isMedium ? t("features") : t(labelKey);
+                const fontSize = isKeyFeatures && isMedium ? 14 : 18;
+                return (
+                  <Link
+                    key={href}
+                    href={`${pathname}${href}`}
+                    className="nav-link"
+                    style={{
+                      fontFamily: "var(--font-poppins)",
+                      fontWeight: 400,
+                      textTransform: "uppercase",
+                      fontSize,
+                    }}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
             </Space>
           )}
         </div>
@@ -149,7 +163,7 @@ export default function Navbar() {
         onClose={() => setDrawerOpen(false)}
         placement="right"
         closable={false}
-        width="min(100vw - 48px, 360px)"
+        size="min(100vw - 48px, 360px)"
         styles={{
           body: {
             padding: 24,

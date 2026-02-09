@@ -40,6 +40,7 @@ export default function Hero() {
   const titleSecondLine2 = t("titleSecondLine2");
 
   const [inView, setInView] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -51,6 +52,14 @@ export default function Hero() {
     );
     observer.observe(el);
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)");
+    const handler = () => setIsSmallScreen(mql.matches);
+    handler();
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
   }, []);
 
   return (
@@ -79,8 +88,7 @@ export default function Hero() {
             borderRadius: "var(--card-radius)",
             width: "100%",
             textAlign: "center",
-            padding: "120px 24px",
-            paddingTop: "48px",
+            padding: "48px var(--card-inner-horizontal)",
             position: "relative",
             zIndex: 1,
             overflow: "hidden",
@@ -115,11 +123,11 @@ export default function Hero() {
               }}
             >
               <Paragraph
+                className="hero-subtitle"
                 style={{
                   color: "var(--text-on-dark-muted)",
                   fontFamily: "var(--font-poppins)",
                   fontWeight: 400,
-                  fontSize: 16,
                   marginBottom: 20,
                   marginTop: 0,
                 }}
@@ -132,26 +140,24 @@ export default function Hero() {
                 }}
               >
                 <h1
+                  className="hero-title"
                   style={{
                     fontFamily: "var(--font-raleway)",
                     fontWeight: 600,
-                    fontSize: "clamp(40px, 8vw, 64px)",
                     color: "var(--text-on-dark)",
                     margin: 0,
                     marginBottom: 8,
-                    lineHeight: 1.2,
                   }}
                 >
                   <WordsWithHover text={titleFirstPart} />
                 </h1>
                 <h2
+                  className="hero-title-secondary"
                   style={{
                     fontFamily: "var(--font-raleway)",
                     fontWeight: 500,
-                    fontSize: "clamp(28px, 5vw, 40px)",
                     color: "var(--text-on-dark)",
                     margin: 0,
-                    lineHeight: 1.2,
                   }}
                 >
                   <WordsWithHover text={titleSecondLine1} />
@@ -160,11 +166,11 @@ export default function Hero() {
                 </h2>
               </div>
               <Paragraph
+                className="hero-description"
                 style={{
                   color: "var(--text-on-dark-muted)",
                   fontFamily: "var(--font-poppins)",
                   fontWeight: 400,
-                  fontSize: 18,
                   marginBottom: 52,
                   maxWidth: "800px",
                   marginLeft: "auto",
@@ -173,14 +179,17 @@ export default function Hero() {
               >
                 <WordsWithHover text={t("description")} />
               </Paragraph>
-              <Space size="middle">
-                <CTAButton href="#contact" style={{ borderRadius: 12 }}>
-                  {t("getInTouch")}
-                </CTAButton>
+              <Space size="middle" className="hero-cta-wrap" direction={isSmallScreen ? "vertical" : "horizontal"}>
+                {!isSmallScreen && (
+                  <CTAButton href="#contact" style={{ borderRadius: 12 }}>
+                    {t("getInTouch")}
+                  </CTAButton>
+                )}
                 <CTAButton
                   variant="secondary"
                   href="#about"
                   style={{ borderRadius: 12 }}
+                  className="hero-cta-btn"
                 >
                   {t("knowMore")}
                 </CTAButton>

@@ -184,7 +184,7 @@ export default function About() {
                     zIndex: 1,
                     width: "100%",
                     flex: 1,
-                    padding: "80px 32px",
+                    padding: "80px var(--card-inner-horizontal)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -234,7 +234,7 @@ export default function About() {
                 }}
                 styles={{
                   body: {
-                    padding: "48px 32px 64px 32px",
+                    padding: "48px var(--card-inner-horizontal) 64px var(--card-inner-horizontal)",
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
@@ -256,40 +256,37 @@ export default function About() {
                 />
                 <div style={{ position: "relative", zIndex: 1 }}>
                   <h2
+                    className="about-title"
                     style={{
                       fontFamily: "var(--font-raleway)",
                       fontWeight: 700,
-                      fontSize: "clamp(32px, 4vw, 48px)",
                       color: "var(--text-on-dark)",
                       marginBottom: 24,
                       marginTop: 0,
-                      lineHeight: 1.2,
                       textAlign: "center",
                     }}
                   >
                     {t("title")}
                   </h2>
                   <Paragraph
+                    className="about-body"
                     style={{
                       color: "var(--text-on-dark-muted)",
                       fontFamily: "var(--font-poppins)",
                       fontWeight: 400,
-                      fontSize: 16,
                       marginBottom: 16,
-                      lineHeight: 1.6,
                       textAlign: "left",
                     }}
                   >
                     {t("paragraph1")}
                   </Paragraph>
                   <Paragraph
+                    className="about-body"
                     style={{
                       color: "var(--text-on-dark-muted)",
                       fontFamily: "var(--font-poppins)",
                       fontWeight: 400,
-                      fontSize: 16,
                       marginBottom: 8,
-                      lineHeight: 1.6,
                       textAlign: "left",
                     }}
                   >

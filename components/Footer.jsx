@@ -69,7 +69,7 @@ export default function Footer() {
             background: "var(--footer-gradient)",
             border: "none",
             borderRadius: "var(--card-radius)",
-            padding: "56px 32px 48px",
+            padding: "56px var(--card-inner-horizontal) 48px",
             marginTop: 0,
             minHeight: 320,
             boxShadow:
@@ -87,17 +87,18 @@ export default function Footer() {
                 />
                 <div style={{ maxWidth: 320 }}>
                   <Paragraph
+                    className="footer-description"
                     style={{
                       color: "var(--text-on-dark-muted)",
                       fontFamily: "var(--font-poppins)",
                       fontWeight: 200,
                       marginBottom: 4,
-                      lineHeight: 1.5,
                     }}
                   >
                     {t("description")}
                   </Paragraph>
                   <Paragraph
+                    className="footer-description"
                     style={{
                       color: "var(--text-on-dark-muted)",
                       fontFamily: "var(--font-poppins)",
@@ -140,6 +141,7 @@ export default function Footer() {
             </Col>
           </Row>
           <Paragraph
+            className="footer-description"
             style={{
               color: "var(--text-on-dark-muted)",
               fontFamily: "var(--font-poppins)",

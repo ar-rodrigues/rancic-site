@@ -12,6 +12,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const baseUrl = process.env.PUBLIC_SITE_URL || "https://rancic.com";
+  const ogImageUrl = `${baseUrl}/main_logo.png`;
   return {
     title: {
       default: "Rancic",
@@ -38,6 +39,14 @@ export async function generateMetadata({ params }) {
       title: "Ranci Software",
       description:
         "Armatura: The Future of Steel Processing and Production Control. Discover our offerings and get in touch.",
+      images: [{ url: ogImageUrl, width: 512, height: 512, alt: "Ranci Software" }],
+    },
+    twitter: {
+      card: "summary",
+      title: "Ranci Software",
+      description:
+        "Armatura: The Future of Steel Processing and Production Control. Discover our offerings and get in touch.",
+      images: [ogImageUrl],
     },
   };
 }

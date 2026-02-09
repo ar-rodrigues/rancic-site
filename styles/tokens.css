@@ -104,6 +104,7 @@
   /* Layout spacing */
   --section-horizontal-padding: 50px;
   --section-vertical-padding: 48px;
+  --card-inner-horizontal: 24px;
   --container-max-width: 1400px;
   --container-width: calc(100% - (var(--section-horizontal-padding) * 2));
   /* Dark section / card text and inputs */
@@ -116,6 +117,13 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
   --button-secondary-border: #ebebeb;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-horizontal-padding: 16px;
+    --card-inner-horizontal: 16px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

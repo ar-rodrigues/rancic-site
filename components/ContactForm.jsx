@@ -102,7 +102,7 @@ export default function ContactForm() {
           border: "none",
           borderRadius: "var(--card-radius)",
           width: "100%",
-          padding: "48px 24px",
+          padding: "48px var(--card-inner-horizontal)",
           overflow: "hidden",
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
         }}
@@ -145,6 +145,7 @@ export default function ContactForm() {
         >
           <Title
             level={2}
+            className="contact-form-title"
             style={{
               color: "var(--text-on-dark)",
               fontFamily: "var(--font-raleway)",
@@ -156,6 +157,7 @@ export default function ContactForm() {
             {t("title")}
           </Title>
           <Paragraph
+            className="contact-form-subtitle"
             style={{
               color: "var(--text-on-dark)",
               fontFamily: "var(--font-poppins)",

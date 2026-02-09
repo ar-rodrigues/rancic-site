@@ -104,6 +104,7 @@ function FeatureCard({ iconSrc, index }) {
       </div>
       <Title
         level={5}
+        className="feature-card-title"
         style={{
           fontFamily: "var(--font-raleway)",
           fontWeight: 600,
@@ -115,6 +116,7 @@ function FeatureCard({ iconSrc, index }) {
         {t(`features.${index}.title`)}
       </Title>
       <Paragraph
+        className="feature-card-desc"
         style={{
           fontFamily: "var(--font-poppins)",
           fontWeight: 300,
@@ -152,7 +154,6 @@ export default function Features() {
   }, []);
 
   const GAP = 24;
-  const middleRowCardWidth = `calc((100% - ${GAP}px) / 2)`;
 
   return (
     <div
@@ -178,7 +179,7 @@ export default function Features() {
             background: "var(--features-section-gradient)",
             border: "none",
             borderRadius: "var(--card-radius)",
-            padding: "48px 24px",
+            padding: "48px var(--card-inner-horizontal)",
             boxShadow:
               "0 8px 24px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15)",
           }}
@@ -192,10 +193,10 @@ export default function Features() {
           >
             <Title
               level={2}
+              className="section-title"
               style={{
                 fontFamily: "var(--font-raleway)",
                 fontWeight: 500,
-                fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
                 color: "var(--text-on-dark)",
                 textAlign: "center",
                 marginBottom: 0,
@@ -206,13 +207,7 @@ export default function Features() {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: GAP }}>
             {/* Row 1: 3 cards */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: GAP,
-              }}
-            >
+            <div className="features-row-3col">
               {FEATURE_ICONS.slice(0, 3).map((iconSrc, i) => (
                 <motion.div
                   key={iconSrc}
@@ -231,19 +226,12 @@ export default function Features() {
               ))}
             </div>
             {/* Row 2: 2 cards centered (no empty column) */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: GAP,
-              }}
-            >
+            <div className="features-row-2col">
               {FEATURE_ICONS.slice(3, 5).map((iconSrc, i) => (
                 <motion.div
                   key={iconSrc}
+                  className="features-row-2col-item"
                   style={{
-                    width: middleRowCardWidth,
-                    minWidth: 0,
                     minHeight: 0,
                     perspective: 1000,
                   }}
@@ -261,13 +249,7 @@ export default function Features() {
               ))}
             </div>
             {/* Row 3: 3 cards */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: GAP,
-              }}
-            >
+            <div className="features-row-3col">
               {FEATURE_ICONS.slice(5, 8).map((iconSrc, i) => (
                 <motion.div
                   key={iconSrc}
